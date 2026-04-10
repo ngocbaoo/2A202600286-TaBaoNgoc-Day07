@@ -145,6 +145,46 @@ def compute_similarity(vec_a: list[float], vec_b: list[float]) -> float:
         return 0.0
     return dot_product / (norm_a * norm_b)
 
+class SlidingWindowChunker:
+    """
+    A sliding window chunker that tries to split at newlines within 
+    the overlap zone to prevent cutting lines in half.
+    """
+    def __init__(self, chunk_size: int = 500, overlap: int = 100) -> None:
+        self.chunk_size = chunk_size
+        self.overlap = overlap
+
+    def chunk(self, text: str) -> list[str]:
+        if not text:
+            return []
+        chunks = []
+        start = 0
+        text_len = len(text)
+        
+        while start < text_len:
+            end = start + self.chunk_size
+            if end >= text_len:
+                chunks.append(text[start:].strip())
+                break
+            
+            # Look for a newline in the overlap zone
+            # The overlap zone is the last 'overlap' chars of the potential chunk
+            overlap_start = end - self.overlap
+            search_zone = text[overlap_start : end]
+            last_newline = search_zone.rfind('\n')
+            
+            if last_newline != -1:
+                # Split at newline
+                actual_end = overlap_start + last_newline + 1
+                chunks.append(text[start:actual_end].strip())
+                start = actual_end
+            else:
+                # Hard split
+                chunks.append(text[start:end].strip())
+                start = end - self.overlap
+                
+        return [c for c in chunks if c]
+
 class ChunkingStrategyComparator:
     """Run all built-in chunking strategies and compare their results."""
 
