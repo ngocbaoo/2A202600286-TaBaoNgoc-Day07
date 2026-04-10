@@ -303,7 +303,7 @@ Chạy 5 benchmark queries của nhóm trên implementation cá nhân của bạ
 > *Viết 2-3 câu:* Học được sự ưu việt của phương pháp \`Semantic Chunking\` từ bạn Tuấn Hưng. Mặc dù chiến lược \`Sliding Window\` của tôi giữ được dạng câu, nhưng việc dùng NLP để nhận diện ngữ nghĩa giúp phân tách các khối thông tin một cách tự nhiên và chính xác hơn hẳn, tránh việc cắt đứt một ý tưởng liên tục.
 
 **Điều hay nhất tôi học được từ nhóm khác (qua demo):**
-> *Viết 2-3 câu:* Nhận ra rằng thuật toán cắt (Chunking) là chưa đủ mà mô hình Nhúng (Embedding) đóng vai trò sống còn. Qua chạy thử MockEmbedder, điểm số trả về bị âm dù cho có lấy đúng câu, minh chứng rằng RAG bắt buộc phải dùng các model Embedding thực sự (như OpenAI) để "hiểu" từ vựng.
+> *Viết 2-3 câu:* Visualize các chunking method một cách chi tiết để thấy được điểm mạnh, điểm yếu của từng phương pháp. 
 
 **Nếu làm lại, tôi sẽ thay đổi gì trong data strategy?**
 > *Viết 2-3 câu:* Thay vì chỉ dựa vào độ dài và ký tự xuống dòng, tôi sẽ thiết kế một pipeline làm sạch dữ liệu tốt hơn (bỏ noise) và kết hợp cắt theo cấu trúc Markdown (Heading/List) trước, sau đó mới dùng Window/Overlap cho các khối lớn. Đồng thời, tôi sẽ triển khai mô hình Embedding thực thụ ngay từ đầu.
